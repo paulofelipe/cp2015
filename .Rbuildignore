@@ -1,1 +1,6 @@
 ^\.github$
+^data-raw$
+^LICENSE\.md$
+.vscode
+rascunho
+data-raw/cp_data.RData
