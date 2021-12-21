@@ -1,4 +1,25 @@
 library(cp2015)
+## Data for example
+## cp2015_nafta is the data available in the package 
+data <- cp2015_nafta
+
+## Simulation imposing zero aggregate deficits.
+cp2015_nafta$deficit <- cp2015_nafta$deficit %>%
+  dplyr::mutate(
+    D_bln = 0, # bln = baseline
+    D_cfl = 0 # cfl = counterfactual
+  )
+
+## Get the results
+results <- run_cp2015(data = cp2015_nafta)
+
+# Welfare for NAFTA countries
+nafta <- c("Canada", "Mexico", "USA")
+results$welfare %>%
+  dplyr::filter(region %in% nafta)
+
+
+library(cp2015)
 
 cp2015_nafta <- cp2015::cp2015_nafta
 
