@@ -91,9 +91,13 @@ solve_model(
     }
   }
 
+  double norm;
+  String message("Unsuccessful convergence");
   omp_set_num_threads(nthreads);
 
   for (int iter = 1; iter <= maxiter; iter++) {
+
+    R_CheckUserInterrupt();
 
 #pragma omp parallel for
     for (int j = 0; j < J; j++) {
@@ -177,7 +181,7 @@ solve_model(
       sum1_ += w_n_hat(n) * wL_n(n);
       sum2_ += wL_n(n);
     }
-    //res_w(N - 1) = sum1_ / sum2_ - 1;
+    res_w(N - 1) = sum1_ / sum2_ - 1;
 
     //double mean_X = xt::amax(X_nj1)();
 
@@ -186,14 +190,23 @@ solve_model(
     norm_X = xt::sum(xt::pow(res_X, 2))();
     norm_w = xt::sum(xt::pow(res_w, 2))();    
 
-    double norm = std::sqrt(norm_c + norm_X + norm_w);
+    norm = std::sqrt(norm_c + norm_X + norm_w);
 
     if ((trace == true) & ((iter == 1) | (iter % triter == 0))) {
       Rcout << "Iteration: " << iter << " - ||x||: " << norm << "\n";
     }
 
-    if(norm < tol)
+    if(iter == maxiter){
+      warning("Maximum number of iteration reached before convergence.");
+      message = "Maximum iteration reached";
       break;
+    }
+
+    if(norm < tol){
+      Rcout << "Iteration: " << iter << " - ||x||: " << norm << "\n";
+      message = "Successful convergence";
+      break;
+    }
 
     // norm = xt::sum(xt::pow(res_c, 2))() +
     //        xt::sum(xt::pow(res_X, 2))() +
@@ -237,6 +250,9 @@ solve_model(
   vars["P_n_hat"] = P_n_hat;
 
   data_["variables"] = vars;
+
+  data_["convergence_criteria"] = norm;
+  data_["message"] = message;
 
   return data_;
 }

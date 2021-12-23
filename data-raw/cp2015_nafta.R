@@ -1,5 +1,6 @@
 ## code to prepare `cp2015_data` dataset goes here
 # load("/mnt/hdd/Documentos/secex/int_comercial/2021_09_21_intro_age_r/data/cp_data.RData")
+library(magrittr, include.only = "%>%")
 
 convert_factor_to_character <- function(data) {
   data %>%
@@ -175,7 +176,8 @@ intermediate_consumption <- tabelas$consumo_intermediario %>%
     value = value_ci
   ) %>%
   dplyr::arrange(input, sector, region) %>%
-  convert_factor_to_character()
+  convert_factor_to_character() %>%
+  dplyr::mutate(value = value / 1e6)
 
 # Consumo final
 final_consumption <- tabelas$consumo_final %>%
@@ -184,7 +186,8 @@ final_consumption <- tabelas$consumo_final %>%
     region = importer,
     value = value_fd
   ) %>%
-  convert_factor_to_character()
+  convert_factor_to_character() %>%
+  dplyr::mutate(value = value / 1e6)
 
 # Valor adicionado
 value_added <- tabelas$valor_adicionado %>%
@@ -193,7 +196,8 @@ value_added <- tabelas$valor_adicionado %>%
     value = value_va
   ) %>%
   dplyr::select(-trabalho) %>%
-  convert_factor_to_character()
+  convert_factor_to_character() %>%
+  dplyr::mutate(value = value / 1e6)
 
 # Comércio bilateral
 nafta <- c("Canada", "Mexico", "USA")
@@ -214,18 +218,21 @@ trade <- tabelas$comercio_bilateral %>%
     sector, exporter, importer, value,
     dplyr::starts_with("tariff"), d, dplyr::starts_with("d_")
   ) %>%
-  convert_factor_to_character()
+  convert_factor_to_character() %>%
+  dplyr::mutate(value = value / 1e6)
 
 # Déficits
 # Imports
 M_n <- trade %>%
   dplyr::group_by(region = importer) %>%
-  dplyr::summarise(value = sum(value), .groups = "drop")
+  dplyr::summarise(value = sum(value), .groups = "drop") %>%
+  dplyr::mutate(value = value / 1e6)
 
 # Exports
 E_n <- trade %>%
   dplyr::group_by(region = exporter) %>%
-  dplyr::summarise(value = sum(value), .groups = "drop")
+  dplyr::summarise(value = sum(value), .groups = "drop") %>%
+  dplyr::mutate(value = value / 1e6)
 
 # Déficit
 deficit <- dplyr::left_join(

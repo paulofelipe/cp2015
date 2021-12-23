@@ -53,5 +53,9 @@ results$welfare %>%
 2 Mexico -0.412  1.72    1.31      1.72 
 3 USA     0.0435 0.0412  0.0847    0.112
 ```
+## Vignette
 
-
+See the vignette for more details:
+```r
+vignette("cp2015-nafta")
+```

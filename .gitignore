@@ -1,3 +1,6 @@
 data-raw/cp_data.RData
 rascunho/
 .vscode/
+inst/doc
+/doc/
+/Meta/

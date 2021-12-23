@@ -189,6 +189,12 @@ compute_results <- function(sol_bln, sol_cfl) {
       by = "region"
     )
 
+  convergence_info <- data.frame(
+    scenario = c("Baseline", "Counterfactual"),
+    criteria_value = c(sol_bln$convergence_criteria, sol_cfl$convergence_criteria),
+    message = c(sol_bln$message, sol_cfl$message)
+  )
+
 
   list(
     c_hat = c_hat,
@@ -201,6 +207,7 @@ compute_results <- function(sol_bln, sol_cfl) {
     trade = trade,
     tot = tot,
     vot = vot,
-    welfare = welfare
+    welfare = welfare,
+    convergence_info = convergence_info
   )
 }
