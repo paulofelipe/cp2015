@@ -19,6 +19,9 @@ run_cp2015(
 \item{data}{a List with the model data. Run \code{help(cp2015_nafta)} to see
 the required data.}
 
+\item{zero_aggregate_deficit}{a boolean indicating whether the simulation
+should impose zero aggregate deficits.}
+
 \item{ufactor}{a double with an update factor number between (0, 1]. This value is used
 to update the value of variables at each iteration.}
 

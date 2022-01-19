@@ -6,3 +6,4 @@ rascunho
 data-raw/cp_data.RData
 ^doc$
 ^Meta$
+^svg$

@@ -1,6 +1,8 @@
 #' Run a simulation using the Caliendo and Parro (2015) model
 #' @param data a List with the model data. Run \code{help(cp2015_nafta)} to see
 #' the required data.
+#' @param zero_aggregate_deficit a boolean indicating whether the simulation
+#' should impose zero aggregate deficits.
 #' @param ufactor a double with an update factor number between (0, 1]. This value is used
 #' to update the value of variables at each iteration.
 #' @param tol a double with the tolerance criteria.
