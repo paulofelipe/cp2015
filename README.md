@@ -20,7 +20,7 @@ remotes::install_github("paulofelipe/cp2015")
 
 This is a basic example which replicates the simulation presented in the subsection 5.1 of the article ["Estimates of the Trade and Welfare Effects of NAFTA"](https://academic.oup.com/restud/article/82/1/1/1547758).
 
-```{r}
+```r
 library(cp2015)
 ## Data for example
 ## cp2015_nafta is the data available in the package 
@@ -36,7 +36,7 @@ We have extended the welfare decomposition formula to account for the possibilit
 
 <!-- $d \ln W_n = \frac{1}{I_n}\sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\left(E_{ni}^j d \ln c_n^j - M_{ni}^j d \ln c_i^j \right)}_{\text{Terms of trade}} + \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\tau_{ni}^ j M_{ni}^j \left(d \ln M_{ni}^j - d \ln c_i^j \right)}_{\text{Volume of trade}} - \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{M_{ni}^j (1 + \tau_{ni}^j) d \ln d_{ni}^j}_{\text{Technical efficiency}}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/9jtcFFupyB.svg">
 
-```{r}
+```r
 # Welfare for NAFTA countries
 nafta <- c("Canada", "Mexico", "USA")
 results$welfare %>%
