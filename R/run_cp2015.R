@@ -12,23 +12,37 @@
 #'
 #' @export
 run_cp2015 <- function(data,
+                       zero_aggregate_deficit = FALSE,
                        ufactor = 0.5,
                        tol = 1e-7,
                        maxiter = 10000,
                        verbose = TRUE,
                        triter = 100,
-                       nthreads = 1) {
-  
-  data <- prepare_cp2015(data)
+                       nthreads = 1) { 
 
+  if (zero_aggregate_deficit) {
+    data$deficit <- data$deficit %>%
+      dplyr::mutate(
+        D_bln = 0,
+        D_cfl = 0
+      )
+  } else {
+    data$deficit <- data$deficit %>%
+      dplyr::mutate(
+        D_bln = D,
+        D_cfl = D
+      )
+  }
+
+  data <- prepare_cp2015(data)
 
   if (verbose) {
     cat(crayon::green("Solving the baseline.\n"))
   }
-  
+
   sol_bln <- solve_model(
     data = data,
-    ufactor = ufactor, 
+    ufactor = ufactor,
     maxiter = maxiter,
     tol = tol,
     triter = triter,
@@ -37,7 +51,7 @@ run_cp2015 <- function(data,
   )
 
   data$variables$tau_nij1 <- data$variables$tau_nij1_cfl
-  data$variables$d_nij1 <- data$variables$d_nij1_cfl
+  data$variables$d_nij_hat <- data$variables$d_nij_hat_cfl
   data$variables$D_n <- data$variables$D_n_cfl
 
   if (verbose) {
@@ -46,7 +60,7 @@ run_cp2015 <- function(data,
 
   sol_cfl <- solve_model(
     data = data,
-    ufactor = ufactor, 
+    ufactor = ufactor,
     maxiter = maxiter,
     tol = tol,
     triter = triter,

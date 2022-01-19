@@ -55,15 +55,15 @@ prepare_cp2015 <- function(data) {
     )
 
   # Initial iceberg trade cost
-  d_nij0 <- data$trade %>%
-    dplyr::select(importer, exporter, sector, d) %>%
-    df_to_array(
-      indexes = list(
-        importer = sets$regions,
-        exporter = sets$regions,
-        sector = sets$sectors
-      )
-    )
+  # d_nij0 <- data$trade %>%
+  #   dplyr::select(importer, exporter, sector, d) %>%
+  #   df_to_array(
+  #     indexes = list(
+  #       importer = sets$regions,
+  #       exporter = sets$regions,
+  #       sector = sets$sectors
+  #     )
+  #   )
 
   # Output
   total_intermediate_consumption <- data$intermediate_consumption %>%
@@ -146,7 +146,7 @@ prepare_cp2015 <- function(data) {
   )
 
   # d' is the new iceberg trade costs
-  d_nij1 <- data$trade %>%
+  d_nij_hat <- data$trade %>%
     dplyr::select(importer, exporter, sector, d_bln) %>%
     df_to_array(
       indexes = list(
@@ -156,7 +156,7 @@ prepare_cp2015 <- function(data) {
       )
     )
 
-  d_nij1_cfl <- data$trade %>%
+  d_nij_hat_cfl <- data$trade %>%
     dplyr::select(importer, exporter, sector, d_cfl) %>%
     df_to_array(
       indexes = list(
@@ -272,8 +272,8 @@ prepare_cp2015 <- function(data) {
     gamma_nj = gamma_nj,
     alpha_nj = alpha_nj,
     tau_nij0 = tau_nij0,
-    d_nij0 = d_nij0,
-    wL_n = wL_n/1e6
+    #d_nij0 = d_nij0,
+    wL_n = wL_n/1e0
   )
 
   # Model variables
@@ -281,16 +281,16 @@ prepare_cp2015 <- function(data) {
     c_nj_hat = c_nj_hat,
     P_nj_hat = P_nj_hat,
     pi_nij1 = pi_nij1,
-    X_nj1 = X_nj1/1e6,
-    I_n1 = I_n1/1e6,
-    D_n = D_n_bln/1e6,
-    D_n_cfl = D_n_cfl/1e6,
+    X_nj1 = X_nj1/1e0,
+    I_n1 = I_n1/1e0,
+    D_n = D_n_bln/1e0,
+    D_n_cfl = D_n_cfl/1e0,
     w_n_hat = w_n_hat,
     tau_nij1 = tau_nij1,
     tau_nij1 = tau_nij1,
     tau_nij1_cfl = tau_nij1_cfl,
-    d_nij1 = d_nij1,
-    d_nij1_cfl = d_nij1_cfl
+    d_nij_hat = d_nij_hat,
+    d_nij_hat_cfl = d_nij_hat_cfl
   )
 
   list(

@@ -48,7 +48,7 @@ solve_model(
   xt::rtensor<double, 2> gamma_nj = params["gamma_nj"];
   xt::rtensor<double, 2> alpha_nj = params["alpha_nj"];
   xt::rtensor<double, 3> tau_nij0 = params["tau_nij0"];
-  xt::rtensor<double, 3> d_nij0 = params["d_nij0"];
+  // xt::rtensor<double, 3> d_nij0 = params["d_nij0"];
   xt::rtensor<double, 1> wL_n = params["wL_n"];
 
   // Variables
@@ -61,7 +61,7 @@ solve_model(
   xt::rtensor<double, 1> D_n = vars["D_n"];
   xt::rtensor<double, 1> w_n_hat = vars["w_n_hat"];
   xt::rtensor<double, 3> tau_nij1 = vars["tau_nij1"];  
-  xt::rtensor<double, 3> d_nij1 = vars["d_nij1"];
+  xt::rtensor<double, 3> d_nij_hat = vars["d_nij_hat"];
   
   // Additional variables
   xt::rtensor<double, 3> kappa_nij_hat = xt::ones<double>({ N, N, J });
@@ -73,20 +73,12 @@ solve_model(
   xt::rtensor<double, 2> res_X = xt::zeros<double>({ N, J });
   xt::rtensor<double, 1> res_w = xt::zeros<double>({ N });
 
-  // Scale
-  //double global_va = xt::sum(wL_n)();
-  // double global_va = 1e6;
-  // wL_n = wL_n / global_va;
-  // X_nj1 = X_nj1 / global_va;
-  // I_n1 = I_n1 / global_va;
-  // D_n = D_n / global_va;
-
   // Equations
   for (int n = 0; n < N; n++) {
     for (int i = 0; i < N; i++) {
       for (int j = 0; j < J; j++) {
         kappa_nij_hat(n, i, j) = (1 + tau_nij1(n, i, j)) / (1 + tau_nij0(n, i, j)) *
-                                 (d_nij1(n, i, j)) / (d_nij0(n, i, j));
+                                 d_nij_hat(n, i, j);
       }
     }
   }
@@ -161,7 +153,8 @@ solve_model(
         for (int k = 0; k < J; k++) {
           int_expenditure += gamma_nkj(n, j, k) * Y_nj1(n, k);
         }
-        res_X(n, j) = X_nj1(n, j) - (int_expenditure + alpha_nj(n, j) * I_n1(n));
+        res_X(n, j) = (X_nj1(n, j) - (int_expenditure + alpha_nj(n, j) * I_n1(n))) /
+                      std::max(X_nj1(n, j), 1.0);
       }
     }
 
@@ -183,7 +176,7 @@ solve_model(
     }
     res_w(N - 1) = sum1_ / sum2_ - 1;
 
-    //double mean_X = xt::amax(X_nj1)();
+    // double mean_X = xt::mean(X_nj1)();
 
     double norm_c, norm_X, norm_w;
     norm_c = sum(xt::pow(res_c, 2))();
@@ -193,7 +186,7 @@ solve_model(
     norm = std::sqrt(norm_c + norm_X + norm_w);
 
     if ((trace == true) & ((iter == 1) | (iter % triter == 0))) {
-      Rcout << "Iteration: " << iter << " - ||x||: " << norm << "\n";
+      Rcout << "Iteration: " << iter << " - ||F(x)||: " << norm << "\n";
     }
 
     if(iter == maxiter){
@@ -203,24 +196,16 @@ solve_model(
     }
 
     if(norm < tol){
-      Rcout << "Iteration: " << iter << " - ||x||: " << norm << "\n";
+      Rcout << "Iteration: " << iter << " - ||F(x)||: " << norm << "\n";
       message = "Successful convergence";
       break;
     }
 
-    // norm = xt::sum(xt::pow(res_c, 2))() +
-    //        xt::sum(xt::pow(res_X, 2))() +
-    //        xt::sum(xt::pow(res_w, 2))();
-    // norm = std::sqrt(norm);
-
-    // Rcout << "||c||: " << norm_c << "\n";
-    // Rcout << "||X||: " << norm_X/mean_X << "\n";
-    // Rcout << "||w||: " << norm_w << "\n";
-
     for (int j = 0; j < J; j++) {
       for (int n = 0; n < N; n++) {
         c_nj_hat(n, j) = c_nj_hat(n, j) - ufactor * res_c(n, j);
-        X_nj1(n, j) = X_nj1(n, j) - ufactor * res_X(n, j);
+        // res_X is relative to std::max(X_nj1(n, j), 1.0)
+        X_nj1(n, j) = X_nj1(n, j) - ufactor * res_X(n, j) * std::max(X_nj1(n, j), 1.0);
       }
     }
 
@@ -246,7 +231,7 @@ solve_model(
   vars["D_n"] = D_n;
   vars["w_n_hat"] = w_n_hat;
   vars["tau_nij1"] = tau_nij1;
-  vars["d_nij1"] = d_nij1;
+  vars["d_nij_hat"] = d_nij_hat;
   vars["P_n_hat"] = P_n_hat;
 
   data_["variables"] = vars;

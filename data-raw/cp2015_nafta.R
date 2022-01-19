@@ -177,7 +177,7 @@ intermediate_consumption <- tabelas$consumo_intermediario %>%
   ) %>%
   dplyr::arrange(input, sector, region) %>%
   convert_factor_to_character() %>%
-  dplyr::mutate(value = value / 1e6)
+  dplyr::mutate(value = value / 1e0)
 
 # Consumo final
 final_consumption <- tabelas$consumo_final %>%
@@ -187,7 +187,7 @@ final_consumption <- tabelas$consumo_final %>%
     value = value_fd
   ) %>%
   convert_factor_to_character() %>%
-  dplyr::mutate(value = value / 1e6)
+  dplyr::mutate(value = value / 1e0)
 
 # Valor adicionado
 value_added <- tabelas$valor_adicionado %>%
@@ -197,7 +197,7 @@ value_added <- tabelas$valor_adicionado %>%
   ) %>%
   dplyr::select(-trabalho) %>%
   convert_factor_to_character() %>%
-  dplyr::mutate(value = value / 1e6)
+  dplyr::mutate(value = value / 1e0)
 
 # Comércio bilateral
 nafta <- c("Canada", "Mexico", "USA")
@@ -210,29 +210,29 @@ trade <- tabelas$comercio_bilateral %>%
       TRUE ~ tarifa_93
     ),
     # Iceberg trade costs
-    d = 1,
+    #d = 1,
     d_bln = 1,
     d_cfl = 1
   ) %>%
   dplyr::select(
     sector, exporter, importer, value,
-    dplyr::starts_with("tariff"), d, dplyr::starts_with("d_")
+    dplyr::starts_with("tariff"), dplyr::starts_with("d_")
   ) %>%
   convert_factor_to_character() %>%
-  dplyr::mutate(value = value / 1e6)
+  dplyr::mutate(value = value / 1e0)
 
 # Déficits
 # Imports
 M_n <- trade %>%
   dplyr::group_by(region = importer) %>%
   dplyr::summarise(value = sum(value), .groups = "drop") %>%
-  dplyr::mutate(value = value / 1e6)
+  dplyr::mutate(value = value / 1e0)
 
 # Exports
 E_n <- trade %>%
   dplyr::group_by(region = exporter) %>%
   dplyr::summarise(value = sum(value), .groups = "drop") %>%
-  dplyr::mutate(value = value / 1e6)
+  dplyr::mutate(value = value / 1e0)
 
 # Déficit
 deficit <- dplyr::left_join(
@@ -243,8 +243,8 @@ deficit <- dplyr::left_join(
 ) %>%
   dplyr::mutate(
     D = value_import - value_export,
-    D_bln = D,
-    D_cfl = D
+    # D_bln = D,
+    # D_cfl = D
   ) %>%
   dplyr::select(region, dplyr::starts_with("D"))
 

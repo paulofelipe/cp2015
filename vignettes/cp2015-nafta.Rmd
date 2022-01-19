@@ -47,27 +47,20 @@ str(data)
 
 ## Running the simulation
 
-In section 5.1, Caliendo and Parro (2015) consider zero aggregate deficits in the baseline and counterfactual scenarios. To do this, we change the `D_bln` and `D_cfl` columns of the `deficit` data.frame to zero. 
-
-```{r}
-# Simulation imposing zero aggregate deficits.
-cp2015_nafta$deficit <- cp2015_nafta$deficit %>%
-  mutate(
-    D_bln = 0, # bln = baseline
-    D_cfl = 0 # cfl = counterfactual
-  )
-```
-
-With the data ready, just use the `run_cp2015()` function to calculate the results. Use `help(run_cp2015)` to see more details about this function. 
+In section 5.1, Caliendo and Parro (2015) consider zero aggregate deficits in the baseline and counterfactual scenarios. To do this, just use the `run_cp2015()` function with the P `zero_aggregate_deficit = TRUE` to calculate the results. Use `help(run_cp2015)` to see more details about this function. 
 
 ```{r}
 # Get the results
-results <- run_cp2015(data = cp2015_nafta)
+results <- run_cp2015(data = cp2015_nafta, zero_aggregate_deficit = TRUE)
 
 str(results)
 ```
 
 ## Reporting the results
+
+We have extended the welfare decomposition formula to account for the possibility of changes in iceberg trade costs (variations in technical efficiency).
+
+$$d \ln W_n = \frac{1}{I_n}\sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\left(E_{ni}^j d \ln c_n^j - M_{ni}^j d \ln c_i^j \right)}_{\text{Terms of trade}} + \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\tau_{ni}^ j M_{ni}^j \left(d \ln M_{ni}^j - d \ln c_i^j \right)}_{\text{Volume of trade}} - \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{M_{ni}^j (1 + \tau_{ni}^j) d \ln d_{ni}^j}_{\text{Technical efficiency}}$$
 
 ```{r}
 # Welfare for NAFTA countries
@@ -78,12 +71,15 @@ results$welfare %>%
   kable(
     format = "html",
     digits = 2,
-    col.names = c("Country", "Terms of trade", "Volume of trade", "Total", "Real wages"),
+    col.names = c(
+      "Country", "Terms of trade", "Volume of trade", "Technical efficiency",
+       "Total", "Real wages"
+      ),
     caption = "Welfare effects from NAFTA’s tariff reductions"
   ) %>%
   kable_styling(full_width = TRUE) %>%
   add_header_above(
-    c(" " = 1, "Welfare" = 3, " " = 1)
+    c(" " = 1, "Welfare" = 4, " " = 1)
   )
 ```
 

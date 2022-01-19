@@ -6,6 +6,7 @@
 \usage{
 run_cp2015(
   data,
+  zero_aggregate_deficit = FALSE,
   ufactor = 0.5,
   tol = 1e-07,
   maxiter = 10000,

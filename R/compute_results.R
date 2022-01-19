@@ -55,6 +55,17 @@ compute_results <- function(sol_bln, sol_cfl) {
       tau_cfl = value_cfl
     )
 
+  d <- dplyr::left_join(
+    x = array_to_df(sol_bln$variables$d_nij_hat),
+    y = array_to_df(sol_cfl$variables$d_nij_hat),
+    by = c("importer", "exporter", "sector"),
+    suffix = c("_bln", "_cfl")
+  ) %>%
+    dplyr::rename(
+      d_bln = value_bln,
+      d_cfl = value_cfl
+    )
+
   trade <- dplyr::left_join(
     x = pi_,
     y = tau,
@@ -158,6 +169,24 @@ compute_results <- function(sol_bln, sol_cfl) {
     ) %>%
     dplyr::select(region = importer, partner = exporter, sector, vot)
 
+  # technical efficiency component
+  tech <- trade %>%
+    dplyr::left_join(
+      y = d,
+      by = c("importer", "exporter", "sector")
+    ) %>%
+    dplyr::mutate(
+      tech = - trade_bln * (1 + tau_bln) * (d_cfl/d_bln - 1)
+    ) %>% 
+    dplyr::left_join(
+      y = I_n,
+      by = c("importer" = "region")
+    ) %>% 
+    dplyr::mutate(
+      tech = tech / I_bln * 100
+    ) %>%
+      dplyr::select(region = importer, partner = exporter, sector, tech)
+
   tot_total <- tot %>%
     dplyr::group_by(region) %>%
     dplyr::summarise(tot = sum(tot)) 
@@ -165,6 +194,10 @@ compute_results <- function(sol_bln, sol_cfl) {
   vot_total <- vot %>%
     dplyr::group_by(region) %>%
     dplyr::summarise(vot = sum(vot)) 
+
+  tech_total <- tech %>% 
+    dplyr::group_by(region) %>%
+    dplyr::summarise(tech = sum(tech)) 
 
   real_wage <- w_hat %>% 
     dplyr::left_join(
@@ -181,8 +214,12 @@ compute_results <- function(sol_bln, sol_cfl) {
     y = vot_total,
     by = "region"
   ) %>%
+    dplyr::left_join(
+      y = tech_total,
+      by = "region"
+    ) %>% 
     dplyr::mutate(
-      welfare = tot + vot
+      welfare = tot + vot + tech
     ) %>% 
     dplyr::left_join(
       y = real_wage,
@@ -195,18 +232,19 @@ compute_results <- function(sol_bln, sol_cfl) {
     message = c(sol_bln$message, sol_cfl$message)
   )
 
-
   list(
-    c_hat = c_hat,
-    P_hat = P_hat,
-    pi = pi_,
+    c_nj_hat = c_hat,
+    P_nj_hat = P_hat,
+    pi_nij = pi_,
     X = X,
-    I = I_n,    
+    I_n = I_n,    
     P_n_hat = P_n_hat,
-    w_hat = w_hat,
+    w_n_hat = w_hat,
+    d_nij = d,
     trade = trade,
     tot = tot,
     vot = vot,
+    tech = tech,
     welfare = welfare,
     convergence_info = convergence_info
   )

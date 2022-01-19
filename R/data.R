@@ -42,8 +42,8 @@
 #'       \item tariff_bln. The tariffs in the baseline scenario. Usually the same
 #'        original tariffs are used, but this is not mandatory.
 #'       \item tariff_cfl. The tariffs in the counterfactual scenario.
-#'       \item d_bln. The iceberg trade costs in the baseline scenario.
-#'       \item d_cfl. The iceberg trade costs in the counterfactual scenario.
+#'       \item d_bln. The relativie change in iceberg trade costs in the baseline scenario (1 = no change).
+#'       \item d_cfl. The relativie change in iceberg trade costs in the counterfactual scenario (1 = no change).
 #'        As the model solution is in exact changes, the initial value can be set
 #'        to 1 and changes can be set proportionally. 
 #'     }
@@ -51,8 +51,6 @@
 #'     \itemize{
 #'       \item region. The region.
 #'       \item D. The original deficit in the database.
-#'       \item D_bln. The deficits in the baseline scenario.
-#'       \item D_cfl. The deficits in the counterfactual scenario.
 #'     }
 #'   \item theta. A data.frame with 2 columns containing the trade elasticities:
 #'     \itemize{
