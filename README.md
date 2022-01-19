@@ -34,7 +34,7 @@ results <- run_cp2015(data = cp2015_nafta, zero_aggregate_deficit = TRUE)
 
 We have extended the welfare decomposition formula to account for the possibility of changes in iceberg trade costs (variations in technical efficiency).
 
-$$d \ln W_n = \frac{1}{I_n}\sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\left(E_{ni}^j d \ln c_n^j - M_{ni}^j d \ln c_i^j \right)}_{\text{Terms of trade}} + \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\tau_{ni}^ j M_{ni}^j \left(d \ln M_{ni}^j - d \ln c_i^j \right)}_{\text{Volume of trade}} - \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{M_{ni}^j (1 + \tau_{ni}^j) d \ln d_{ni}^j}_{\text{Technical efficiency}}$$
+<!-- $d \ln W_n = \frac{1}{I_n}\sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\left(E_{ni}^j d \ln c_n^j - M_{ni}^j d \ln c_i^j \right)}_{\text{Terms of trade}} + \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{\tau_{ni}^ j M_{ni}^j \left(d \ln M_{ni}^j - d \ln c_i^j \right)}_{\text{Volume of trade}} - \frac{1}{I_n} \sum_{j = 1}^J\sum_{i = 1}^N \underbrace{M_{ni}^j (1 + \tau_{ni}^j) d \ln d_{ni}^j}_{\text{Technical efficiency}}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/9jtcFFupyB.svg">
 
 ```{r}
 # Welfare for NAFTA countries
