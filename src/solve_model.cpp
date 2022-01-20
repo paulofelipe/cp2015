@@ -196,7 +196,9 @@ solve_model(
     }
 
     if(norm < tol){
-      Rcout << "Iteration: " << iter << " - ||F(x)||: " << norm << "\n";
+      if(trace == true) {
+        Rcout << "Iteration: " << iter << " - ||F(x)||: " << norm << "\n";
+      }
       message = "Successful convergence";
       break;
     }

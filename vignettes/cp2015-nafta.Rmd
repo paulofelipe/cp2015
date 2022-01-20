@@ -205,7 +205,8 @@ results$trade %>%
   group_by(importer, exporter) %>%
   summarise(
     trade_bln = sum(trade_bln),
-    trade_cfl = sum(trade_cfl)
+    trade_cfl = sum(trade_cfl),
+    .groups = "drop"
   ) %>%
   mutate(
     change = (trade_cfl / trade_bln - 1) * 100,
@@ -236,7 +237,8 @@ results$trade %>%
   group_by(exporter, sector) %>%
   summarise(
     trade_bln = sum(trade_bln),
-    trade_cfl = sum(trade_cfl)
+    trade_cfl = sum(trade_cfl),
+    .groups = "drop"
   ) %>%
   group_by(exporter) %>%
   mutate(

@@ -78,9 +78,13 @@ compute_results <- function(sol_bln, sol_cfl) {
     dplyr::mutate(
       trade_bln = X_bln / (1 + tau_bln) * pi_bln,
       trade_cfl = X_cfl / (1 + tau_cfl) * pi_cfl
+    ) %>%
+    dplyr::left_join(
+      y = d,
+      by = c("importer", "exporter", "sector")
     ) %>% 
     dplyr::select(
-      importer:sector, tau_bln, tau_cfl, trade_bln, trade_cfl
+      importer:sector, tau_bln, tau_cfl, d_bln, d_cfl, trade_bln, trade_cfl
     )
 
   # trade %>%
@@ -171,10 +175,6 @@ compute_results <- function(sol_bln, sol_cfl) {
 
   # technical efficiency component
   tech <- trade %>%
-    dplyr::left_join(
-      y = d,
-      by = c("importer", "exporter", "sector")
-    ) %>%
     dplyr::mutate(
       tech = - trade_bln * (1 + tau_bln) * (d_cfl/d_bln - 1)
     ) %>% 
@@ -224,7 +224,8 @@ compute_results <- function(sol_bln, sol_cfl) {
     dplyr::left_join(
       y = real_wage,
       by = "region"
-    )
+    ) %>%
+    as.data.frame()
 
   convergence_info <- data.frame(
     scenario = c("Baseline", "Counterfactual"),
@@ -236,11 +237,10 @@ compute_results <- function(sol_bln, sol_cfl) {
     c_nj_hat = c_hat,
     P_nj_hat = P_hat,
     pi_nij = pi_,
-    X = X,
+    X_nj = X,
     I_n = I_n,    
     P_n_hat = P_n_hat,
     w_n_hat = w_hat,
-    d_nij = d,
     trade = trade,
     tot = tot,
     vot = vot,

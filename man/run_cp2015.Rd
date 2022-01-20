@@ -2,7 +2,7 @@
 % Please edit documentation in R/run_cp2015.R
 \name{run_cp2015}
 \alias{run_cp2015}
-\title{Run a simulation using the Caliendo and Parro (2015) model}
+\title{Run a simulation using the Caliendo and Parro (2015) quantitative trade model}
 \usage{
 run_cp2015(
   data,
@@ -36,6 +36,130 @@ multiple of that number.}
 
 \item{nthreads}{an integer indicating the number of threads to use.}
 }
+\value{
+A list with 13 elements:
+\itemize{
+\item c_nj_hat (changes in cost an input bundle) - a data.frame with 3 columns:
+\itemize{
+\item region
+\item sector
+\item c_nj_hat (relative change)
+}
+\item P_nj_hat (changes in sectoral price index) - a data.frame with 3 columns:
+\itemize{
+\item region
+\item sector
+\item P_nj_hat (relative change)
+}
+\item pi_nij (bilateral trade share) - a data.frame with 5 columns:
+\itemize{
+\item importer
+\item exporter
+\item sector
+\item pi_bln (trade share in the baseline scenario)
+\item pi_cfl (trade share in the counterfactual scenarion)
+}
+\item X_nj (total expenditure) - a data.frame with 4 columns:
+\itemize{
+\item region
+\item sector
+\item X_bln (expenditure in the baseline scenario)
+\item X_cfl (expenditure in the counterfactual scenario)
+}
+\item I_n (regional income) - a data.frame with 3 columns:
+\itemize{
+\item region
+\item I_bln (regional income in the baseline scenario)
+\item I_cfl (regional income in the counterfactual scenario)
+}
+\item P_n_hat (consumer price index) - a data.frame with 2 columns:
+\itemize{
+\item region
+\item P_n_hat (relative change)
+}
+\item w_n_hat ("wages") - a data.frame with 2 columns:
+\itemize{
+\item region
+\item w_hat (relative change)
+}
+\item trade (trade data) - a data.frame with 9 columns:
+\itemize{
+\item importer
+\item exporter
+\item sector
+\item tau_bln (tarrifs in the baseline scenario)
+\item tau_cfl (tarrifs in the counterfactual scenario)
+\item d_bln (relative changes of the iceberg trade costs in the baseline scenario)
+\item d_cfl (relative changes of the iceberg trade costs in the counterfactual scenario)
+\item trade_bln (trade value, net of tariffs, in the baseline scenario)
+\item trade_cfl (trade value, net of tariffs, in the counterfactual scenario)
+}
+\item tot (terms of trade) - a data.frame with 4 columns:
+\itemize{
+\item partner
+\item region
+\item sector
+\item tot (contribution of terms of trade to welfare in \%)
+}
+\item vot (volume of trade) - a data.frame with 4 columns:
+\itemize{
+\item region
+\item partner
+\item sector
+\item vot (contribution of volume of trade to welfare in \%)
+}
+\item tech (technical efficiency) - a data.frame with 4 columns:
+\itemize{
+\item region
+\item partner
+\item sector
+\item tech (contribution of technical efficiency to welfare in \%)
+}
+\item welfare (total welfare by region) - a data.frame with 6 columns:
+\itemize{
+\item region
+\item tot (contribution of terms of trade to welfare in \%)
+\item vot (contribution of volume of trade to welfare in \%)
+\item tech (contribution of technical efficiency to welfare in \%)
+\item welfare (total welfare in \%)
+\item realwage (relative change in the real wage).
+}
+\item convergence_info (info about the solution) - a daata.frame with 3 variables:
+\itemize{
+\item scenario
+\item criteria_value
+\item message
+}
+}
+}
 \description{
-Run a simulation using the Caliendo and Parro (2015) model
+Caliendo and Parro (2015) develop a Ricardian quantitative trade model that
+considers multiple countries and multiple sectors. The model allows interactions
+accross sectors based on Input-Output linkages.
+
+The model is originally used to study the trade and welfare effects of NAFTA
+given the observed tariff changes. However, from data provided by the user, this model
+can be used for simulations to assess the effects of different trade
+policies (changes in tariffs and/or iceberg trade costs).
+}
+\examples{
+
+data("cp2015_nafta")
+
+results_without_deficits <- run_cp2015(
+  data = cp2015_nafta,
+  zero_aggregate_deficit = TRUE,
+  verbose = TRUE
+)
+
+results_with_deficits <- run_cp2015(
+  data = cp2015_nafta,
+  zero_aggregate_deficit = FALSE,
+  verbose = TRUE
+)
+
+}
+\references{
+Lorenzo Caliendo, Fernando Parro, Estimates of the Trade and Welfare Effects of NAFTA,
+\emph{The Review of Economic Studies}, Volume 82, Issue 1, January 2015, Pages 1–44, https://doi.org/10.1093/restud/rdu035
 }

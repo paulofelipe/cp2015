@@ -46,6 +46,7 @@ results$welfare %>%
 This example considers only variations in tariffs. In this way, there are no variations in technical efficiency. However, the package allows simulations that take into account changes in the iceberg trade costs.
 
 ```
+# Values are in %
 # tot = terms of trade
 # vot = volume of trade
 # tech = technical efficiency
