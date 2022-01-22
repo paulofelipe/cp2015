@@ -18,13 +18,13 @@
 #'        \item input. The input sector.
 #'        \item sector. The user sector.
 #'        \item sector. The user region.
-#'        \item value. The intermediate consumption value.
+#'        \item value. The intermediate consumption value (tariffs-inclusive).
 #'     }
 #'   \item final_consumption. A data.frame with 3 columns containing final consumption data:
 #'     \itemize{
 #'       \item sector. The sector.
 #'       \item region. The consumer region.
-#'       \item value. The final consumption value.
+#'       \item value. The final consumption value (tariffs-inclusive).
 #'     }
 #'   \item value_added. A data.frame with 3 column containing value added ("labor") data:
 #'     \itemize{
@@ -37,7 +37,7 @@
 #'       \item sector. The sector.
 #'       \item exporter. The exporter region.
 #'       \item importer. The importer region.
-#'       \item value. The trade value.
+#'       \item value. The trade value (net of tariffs).
 #'       \item tariff. The original tariffs in the database.
 #'       \item tariff_bln. The tariffs in the baseline scenario. Usually the same
 #'        original tariffs are used, but this is not mandatory.

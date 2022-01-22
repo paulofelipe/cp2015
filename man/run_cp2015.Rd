@@ -22,12 +22,12 @@ the required data.}
 \item{zero_aggregate_deficit}{a boolean indicating whether the simulation
 should impose zero aggregate deficits.}
 
-\item{ufactor}{a double with an update factor number between (0, 1]. This value is used
+\item{ufactor}{an update factor between (0, 1]. This value is used
 to update the value of variables at each iteration.}
 
-\item{tol}{a double with the tolerance criteria.}
+\item{tol}{a tolerance number for convergence. The default is 1e-7.}
 
-\item{maxiter}{an integer with the number of maximum iterations.}
+\item{maxiter}{the number of maximum iterations.}
 
 \item{verbose}{a boolean indicating whether convergence information should be printed.}
 

@@ -1,6 +1,6 @@
 Package: cp2015
 Title: Caliendo and Parro (2015) quantitative (international) trade model
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person(given = "Paulo Felipe",
            family = "Oliveira",
@@ -15,17 +15,19 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     crayon,
-    dplyr,
-    kableExtra,
+    dplyr,    
     magrittr,
     Rcpp,
-    rlang,
-    tidyr
+    rlang
 Depends: 
     R (>= 2.10)
 LinkingTo: 
     Rcpp, xtensor
 Suggests: 
     rmarkdown,
-    knitr
+    knitr,
+    tidyr,
+    kableExtra,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
+Config/testthat/edition: 3

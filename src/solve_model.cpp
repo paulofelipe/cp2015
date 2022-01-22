@@ -1,6 +1,8 @@
 #include <cp2015.h>
 #include <Rcpp.h>
-#include <omp.h>
+#ifdef _OPENMP
+  #include <omp.h>
+#endif
 
 using namespace Rcpp;
 
@@ -85,7 +87,10 @@ solve_model(
 
   double norm;
   String message("Unsuccessful convergence");
-  omp_set_num_threads(nthreads);
+
+  #ifdef _OPENMP
+    omp_set_num_threads(nthreads);
+  #endif
 
   for (int iter = 1; iter <= maxiter; iter++) {
 

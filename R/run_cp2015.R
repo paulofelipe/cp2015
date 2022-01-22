@@ -16,10 +16,10 @@
 #' the required data.
 #' @param zero_aggregate_deficit a boolean indicating whether the simulation
 #' should impose zero aggregate deficits.
-#' @param ufactor a double with an update factor number between (0, 1]. This value is used
+#' @param ufactor an update factor between (0, 1]. This value is used
 #' to update the value of variables at each iteration.
-#' @param tol a double with the tolerance criteria.
-#' @param maxiter an integer with the number of maximum iterations.
+#' @param tol a tolerance number for convergence. The default is 1e-7.
+#' @param maxiter the number of maximum iterations.
 #' @param verbose a boolean indicating whether convergence information should be printed.
 #' @param triter an integer indicating that information should be printed for each
 #' multiple of that number.
