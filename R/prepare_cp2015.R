@@ -14,7 +14,7 @@
 #'   \item variables_descs. Variable descriptions.
 #' }
 #'
-#' @param data a named list with the basedata to create the model components.
+#' @param data a named list with the data to create the model components.
 #' Run \code{help(cp2015_nafta)} to see the data format that is required.
 #'
 #' @return a named list with 5 elements.

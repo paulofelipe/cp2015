@@ -45,7 +45,7 @@ A list with 13 elements:
 \item sector
 \item c_nj_hat (relative change)
 }
-\item P_nj_hat (changes in sectoral price index) - a data.frame with 3 columns:
+\item P_nj_hat (changes in the region-sector price index) - a data.frame with 3 columns:
 \itemize{
 \item region
 \item sector
@@ -57,7 +57,7 @@ A list with 13 elements:
 \item exporter
 \item sector
 \item pi_bln (trade share in the baseline scenario)
-\item pi_cfl (trade share in the counterfactual scenarion)
+\item pi_cfl (trade share in the counterfactual scenario)
 }
 \item X_nj (total expenditure) - a data.frame with 4 columns:
 \itemize{
@@ -87,8 +87,8 @@ A list with 13 elements:
 \item importer
 \item exporter
 \item sector
-\item tau_bln (tarrifs in the baseline scenario)
-\item tau_cfl (tarrifs in the counterfactual scenario)
+\item tau_bln (tariffs in the baseline scenario)
+\item tau_cfl (tariffs in the counterfactual scenario)
 \item d_bln (relative changes of the iceberg trade costs in the baseline scenario)
 \item d_cfl (relative changes of the iceberg trade costs in the counterfactual scenario)
 \item trade_bln (trade value, net of tariffs, in the baseline scenario)
@@ -124,7 +124,7 @@ A list with 13 elements:
 \item welfare (total welfare in \%)
 \item realwage (relative change in the real wage).
 }
-\item convergence_info (info about the solution) - a daata.frame with 3 variables:
+\item convergence_info (info about the solution) - a data.frame with 3 variables:
 \itemize{
 \item scenario
 \item criteria_value
@@ -135,7 +135,7 @@ A list with 13 elements:
 \description{
 Caliendo and Parro (2015) develop a Ricardian quantitative trade model that
 considers multiple countries and multiple sectors. The model allows interactions
-accross sectors based on Input-Output linkages.
+across sectors based on Input-Output linkages.
 
 The model is originally used to study the trade and welfare effects of NAFTA
 given the observed tariff changes. However, from data provided by the user, this model
@@ -144,19 +144,21 @@ policies (changes in tariffs and/or iceberg trade costs).
 }
 \examples{
 
-data("cp2015_nafta")
-
-results_without_deficits <- run_cp2015(
-  data = cp2015_nafta,
-  zero_aggregate_deficit = TRUE,
-  verbose = TRUE
-)
-
-results_with_deficits <- run_cp2015(
-  data = cp2015_nafta,
-  zero_aggregate_deficit = FALSE,
-  verbose = TRUE
-)
+\dontrun{
+  data("cp2015_nafta")
+  
+  results_without_deficits <- run_cp2015(
+    data = cp2015_nafta,
+    zero_aggregate_deficit = TRUE,
+    verbose = TRUE
+  )
+  
+  results_with_deficits <- run_cp2015(
+    data = cp2015_nafta,
+    zero_aggregate_deficit = FALSE,
+    verbose = TRUE
+  )
+}
 
 }
 \references{

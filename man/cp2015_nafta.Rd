@@ -38,8 +38,8 @@ trade, deficit, and theta.
 \item tariff_bln. The tariffs in the baseline scenario. Usually the same
 original tariffs are used, but this is not mandatory.
 \item tariff_cfl. The tariffs in the counterfactual scenario.
-\item d_bln. The relativie change in iceberg trade costs in the baseline scenario (1 = no change).
-\item d_cfl. The relativie change in iceberg trade costs in the counterfactual scenario (1 = no change).
+\item d_bln. The relative change in iceberg trade costs in the baseline scenario (1 = no change).
+\item d_cfl. The relative change in iceberg trade costs in the counterfactual scenario (1 = no change).
 As the model solution is in exact changes, the initial value can be set
 to 1 and changes can be set proportionally.
 }

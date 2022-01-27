@@ -87,18 +87,6 @@ compute_results <- function(sol_bln, sol_cfl) {
       importer:sector, tau_bln, tau_cfl, d_bln, d_cfl, trade_bln, trade_cfl
     )
 
-  # trade %>%
-  #   dplyr::group_by(importer, exporter) %>%
-  #   dplyr::summarise(
-  #     dplyr::across(
-  #       dplyr::starts_with("trade_"),
-  #       sum
-  #     )
-  #   ) %>%
-  #   dplyr::mutate(change = round((trade_cfl/trade_bln - 1) * 100, 2)) %>%
-  #   dplyr::filter(importer == "USA", exporter == "Mexico") %>%
-  #   dplyr::pull(change)
-
   I_n <- dplyr::left_join(
     x = array_to_df(sol_bln$variables$I_n),
     y = array_to_df(sol_cfl$variables$I_n),

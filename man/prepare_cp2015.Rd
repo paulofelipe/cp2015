@@ -7,7 +7,7 @@
 prepare_cp2015(data)
 }
 \arguments{
-\item{data}{a named list with the basedata to create the model components.
+\item{data}{a named list with the data to create the model components.
 Run \code{help(cp2015_nafta)} to see the data format that is required.}
 }
 \value{

@@ -6,7 +6,7 @@
 [![R-CMD-check](https://github.com/paulofelipe/cp2015/workflows/R-CMD-check/badge.svg)](https://github.com/paulofelipe/cp2015/actions)
 <!-- badges: end -->
 
-The goal of `cp2015` package is to implement the Caliend and Parro (2015) quantitative trade model in R.
+The goal of `cp2015` package is to implement the Caliendo and Parro (2015) quantitative trade model in R.
 
 ## Installation
 

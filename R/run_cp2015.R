@@ -5,7 +5,7 @@
 #'  
 #' Caliendo and Parro (2015) develop a Ricardian quantitative trade model that
 #' considers multiple countries and multiple sectors. The model allows interactions
-#' accross sectors based on Input-Output linkages. 
+#' across sectors based on Input-Output linkages. 
 #' 
 #' The model is originally used to study the trade and welfare effects of NAFTA
 #' given the observed tariff changes. However, from data provided by the user, this model
@@ -33,7 +33,7 @@
 #'    * region
 #'    * sector
 #'    * c_nj_hat (relative change)
-#'  * P_nj_hat (changes in sectoral price index) - a data.frame with 3 columns:
+#'  * P_nj_hat (changes in the region-sector price index) - a data.frame with 3 columns:
 #'    * region
 #'    * sector
 #'    * P_nj_hat (relative change)
@@ -42,7 +42,7 @@
 #'    * exporter
 #'    * sector
 #'    * pi_bln (trade share in the baseline scenario)
-#'    * pi_cfl (trade share in the counterfactual scenarion)
+#'    * pi_cfl (trade share in the counterfactual scenario)
 #'  * X_nj (total expenditure) - a data.frame with 4 columns:
 #'    * region
 #'    * sector
@@ -62,8 +62,8 @@
 #'    * importer
 #'    * exporter
 #'    * sector
-#'    * tau_bln (tarrifs in the baseline scenario)
-#'    * tau_cfl (tarrifs in the counterfactual scenario)
+#'    * tau_bln (tariffs in the baseline scenario)
+#'    * tau_cfl (tariffs in the counterfactual scenario)
 #'    * d_bln (relative changes of the iceberg trade costs in the baseline scenario)
 #'    * d_cfl (relative changes of the iceberg trade costs in the counterfactual scenario)
 #'    * trade_bln (trade value, net of tariffs, in the baseline scenario)
@@ -90,7 +90,7 @@
 #'    * tech (contribution of technical efficiency to welfare in %)
 #'    * welfare (total welfare in %)
 #'    * realwage (relative change in the real wage).
-#'  * convergence_info (info about the solution) - a daata.frame with 3 variables:
+#'  * convergence_info (info about the solution) - a data.frame with 3 variables:
 #'    * scenario
 #'    * criteria_value
 #'    * message
@@ -101,19 +101,21 @@
 #'
 #' @examples 
 #' 
-#' data("cp2015_nafta")
-#' 
-#' results_without_deficits <- run_cp2015(
-#'   data = cp2015_nafta,
-#'   zero_aggregate_deficit = TRUE,
-#'   verbose = TRUE
-#' )
-#' 
-#' results_with_deficits <- run_cp2015(
-#'   data = cp2015_nafta,
-#'   zero_aggregate_deficit = FALSE,
-#'   verbose = TRUE
-#' )
+#' \dontrun{
+#'   data("cp2015_nafta")
+#'   
+#'   results_without_deficits <- run_cp2015(
+#'     data = cp2015_nafta,
+#'     zero_aggregate_deficit = TRUE,
+#'     verbose = TRUE
+#'   )
+#'   
+#'   results_with_deficits <- run_cp2015(
+#'     data = cp2015_nafta,
+#'     zero_aggregate_deficit = FALSE,
+#'     verbose = TRUE
+#'   )
+#' }
 #'
 #' @export
 run_cp2015 <- function(data,

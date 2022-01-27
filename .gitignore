@@ -5,3 +5,10 @@ inst/doc
 /doc/
 /Meta/
 data-raw/cp2015_data.R
+
+# Platform specific compiled files
+src/*.gcda
+src/*.o
+src/*.so
+src/*.dll
+inst/doc

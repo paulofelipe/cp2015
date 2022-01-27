@@ -1,12 +1,12 @@
 Package: cp2015
-Title: Caliendo and Parro (2015) quantitative (international) trade model
+Title: Caliendo and Parro (2015) Quantitative Trade Model
 Version: 0.1.0
 Authors@R: 
     person(given = "Paulo Felipe",
            family = "Oliveira",
            role = c("aut", "cre"),
            email = "paulofel2011@gmail.com",
-           comment = c(ORCID = " 0000-0002-5676-198X"))
+           comment = c(ORCID = "0000-0002-5676-198X"))
 Description: Run simulations using Caliendo and Parro (2015) quantitative trade model.
 License: MIT + file LICENSE
 Encoding: UTF-8
