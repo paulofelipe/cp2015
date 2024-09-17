@@ -14,6 +14,16 @@ To install the development version, run the following command:
 
 ``` r
 remotes::install_github("paulofelipe/cp2015")
+# Or use the following command to install the package with vignettes
+# remotes::install_github("paulofelipe/cp2015", build_vignettes = TRUE)
+```
+
+### Note
+
+The dependency `xtensor` is no longer available on CRAN, but it can be installed directly from GitHub using the following command:
+
+```r
+devtools::install_github("xtensor-stack/Xtensor.R")
 ```
 
 ## Example
